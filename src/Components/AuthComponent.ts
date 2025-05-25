@@ -1,10 +1,8 @@
-// Components/AuthComponent.ts
 import { initializeApp } from 'firebase/app';
 import {
     getAuth,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    onAuthStateChanged,
     signOut
 } from 'firebase/auth';
 import { firebaseConfig } from '../services/firebase/FirebaseConfig';
@@ -22,13 +20,7 @@ class AuthComponent extends HTMLElement {
         this.render();
         this.setupListeners();
 
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                window.dispatchEvent(new CustomEvent('user-authenticated', {
-                    detail: { uid: user.uid, email: user.email }
-                }));
-            }
-        });
+
     }
 
     setupListeners() {

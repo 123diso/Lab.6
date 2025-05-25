@@ -1,10 +1,9 @@
-import AuthComponent from "../Components/AuthComponent"; // nuevo
-import TaskForm from "../Components/taskForm"; 
-import TaskList from "../Components/task-list";
-import FirebaseComponent from "../Components/FirebaseComponent";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 class Root extends HTMLElement {
     private userId: string | null = null;
+    private loading: boolean = true;
+    private authUnsubscribe: (() => void) | null = null;
 
     constructor() {
         super();
@@ -12,15 +11,30 @@ class Root extends HTMLElement {
     }
 
     connectedCallback() {
+        const auth = getAuth();
+        this.loading = true;
         this.render();
-        this.shadowRoot?.addEventListener('user-authenticated', (e: any) => {
-            this.userId = e.detail.uid;
-            this.render(); // Recargar vista con tareas del usuario
+
+        this.authUnsubscribe = onAuthStateChanged(auth, (user) => {
+            this.userId = user?.uid ?? null;
+            this.loading = false;
+            this.render();
         });
+    }
+
+    disconnectedCallback() {
+        if (this.authUnsubscribe) this.authUnsubscribe();
     }
 
     render() {
         if (!this.shadowRoot) return;
+
+
+        if (this.loading) {
+            this.shadowRoot.innerHTML = `<p>Cargando...</p>`;
+            return;
+        }
+
 
         this.shadowRoot.innerHTML = `
             <auth-component></auth-component>

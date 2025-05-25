@@ -1,6 +1,7 @@
 import { userType, PostType } from "../Utills/Types";
 import { fetchUsers } from "../services/firebase/UserService";
 import {addpost, getPostByuserId} from "../services/firebase/PostService";
+import { globalStyles } from '../styles/globalStyles';
 
 class FirebaseComponent extends HTMLElement {
     private users: userType[] = [];
@@ -23,7 +24,8 @@ class FirebaseComponent extends HTMLElement {
     render (){
         if(!this.shadowRoot)return;
         this.shadowRoot.innerHTML = `
-        <div>
+        <style>${globalStyles}</style>
+        <div class="container">
         <h1>componente firebase1</h1>
         <p>Lista de usuarios</p>
         <ul>${this.users.map (user=>`

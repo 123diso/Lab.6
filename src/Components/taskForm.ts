@@ -1,4 +1,5 @@
 import { TaskActions } from '../flux/Actions';
+import { globalStyles } from '../styles/globalStyles';
 
 class TaskForm extends HTMLElement {
     constructor() {
@@ -23,11 +24,14 @@ class TaskForm extends HTMLElement {
 
     render() {
         this.shadowRoot!.innerHTML = `
+            <style>${globalStyles}</style>
+        <div class="container">
             <form>
                 <input type="text" id="title" placeholder="Título" required />
                 <input type="text" id="description" placeholder="Descripción (opcional)" />
                 <button type="submit">Agregar Tarea</button>
             </form>
+            </div>
         `;
     }
 }

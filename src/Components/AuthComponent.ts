@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { globalStyles } from '../styles/globalStyles';
 import {
     getAuth,
     signInWithEmailAndPassword,
@@ -75,28 +76,64 @@ class AuthComponent extends HTMLElement {
         });
     }
 
-    render() {
-        this.shadowRoot!.innerHTML = `
-            <div>
-                <h3>Registro</h3>
-                <form id="registerForm">
-                    <input id="registerEmail" type="email" placeholder="Correo" required />
-                    <input id="registerPassword" type="password" placeholder="Contraseña" required />
-                    <button type="submit">Registrarse</button>
-                </form>
-
-                <h3>Iniciar Sesión</h3>
-                <form id="loginForm">
-                    <input id="loginEmail" type="email" placeholder="Correo" required />
-                    <input id="loginPassword" type="password" placeholder="Contraseña" required />
-                    <button type="submit">Iniciar Sesión</button>
-                </form>
-
-                <button id="logoutBtn">Cerrar Sesión</button>
-            </div>
-        `;
+render() {
+this.shadowRoot!.innerHTML = `
+    <style>
+    ${globalStyles}
+    .auth-wrapper {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2rem;
+        padding: 1rem 0;
     }
-}
+
+    .form-box {
+        flex: 1 1 300px;
+        max-width: 400px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        padding: 2rem;
+    }
+
+    h3 {
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+    </style>
+
+    <div class="auth-wrapper">
+    <div class="form-box">
+        <h3>Registro</h3>
+        <form id="registerForm">
+        <input id="registerEmail" type="email" placeholder="Correo" required />
+        <input id="registerPassword" type="password" placeholder="Contraseña" required />
+        <button type="submit">Registrarse</button>
+        </form>
+    </div>
+
+    <div class="form-box">
+        <h3>Iniciar Sesión</h3>
+        <form id="loginForm">
+        <input id="loginEmail" type="email" placeholder="Correo" required />
+        <input id="loginPassword" type="password" placeholder="Contraseña" required />
+        <button type="submit">Iniciar Sesión</button>
+        </form>
+
+        <div style="margin-top: 1rem; text-align: center;">
+        <button id="logoutBtn">Cerrar Sesión</button>
+        </div>
+    </div>
+    </div>
+    <div class="arrow-container">
+    <svg class="arrow-icon" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 100 100">
+    <path d="M40 20 L60 50 L40 80" stroke=" #3a91f5"; stroke-width="5" fill="none" />
+    </svg>
+    </div>
+
+`;
+}}
 
 export default AuthComponent;
 

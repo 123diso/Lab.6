@@ -1,5 +1,6 @@
 import { taskStore, Task } from '../flux/Store';
 import { TaskActions } from '../flux/Actions';
+import { globalStyles } from '../styles/globalStyles';
 
 class TaskList extends HTMLElement {
     private tasks: Task[] = [];
@@ -27,6 +28,8 @@ class TaskList extends HTMLElement {
         const completed = this.tasks.filter(t => t.completed);
 
         this.shadowRoot!.innerHTML = `
+        <style>${globalStyles}</style>
+        <div class="container">
             <section>
                 <h3>Pendientes</h3>
                 <ul>
@@ -45,6 +48,7 @@ class TaskList extends HTMLElement {
                     ${completed.map(t => `<li><strong>${t.title}</strong>: ${t.description || ''}</li>`).join('')}
                 </ul>
             </section>
+            </div>
         `;
 
         this.shadowRoot!.querySelectorAll('button').forEach(btn => {
